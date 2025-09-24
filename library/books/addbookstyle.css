@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #4a4a4a;
+    margin-bottom: 20px;
+}
+
+.field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.field label {
+    min-width: 120px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    flex: 1;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+span.error-message {
+    color: red;
+    font-size: 14px;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #5cb85c;
+    color: #fff;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #4cae4c;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.error-msg {
+    color: red;
+    text-align: center;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid red;
+}
