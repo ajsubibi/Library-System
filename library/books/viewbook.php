@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     </style>
 </head>
 <body>
-  <h2>Search Books</h2>
+  <h2> LIBRARY </h2>
    <form action="" method="get">
         <label for="title">Search Title:</label>
          <input type="text" id="title" name="title" value="<?= $title ?>">
@@ -39,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </select>
             <button type="submit">Search</button>
     </form>
-        <h2>View Books</h2>
         <button><a href="addbook.php" class="add-book-btn">Add New Book</a></button>
         <table border=1>
             <tr>
@@ -68,3 +67,4 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </table>
 </body>
 </html>
+
