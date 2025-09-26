@@ -5,7 +5,7 @@ $isValid = true;
 $pdo = null;
 
 try {
-    $db = new Database();
+    $db = new Library();
     $pdo = $db->connect();
 } catch (PDOException $e) {
     echo "<p style='color:red;'>Database connection error: " . htmlspecialchars($e->getMessage()) . "</p>";
@@ -69,22 +69,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $isValid) {
     }
 
     if (empty(array_filter($error))) {
-        $bookobj->title = $book["title"];
-        $bookobj->author = $book["author"];
-        $bookobj->genre = strtolower($book["genre"]);
-        $bookobj->publication_year = $book["publication_year"];
-        $bookobj->publisher = $book["publisher"];
-        $bookobj->copies = $book["copies"];
+        if ($bookobj->isBookTitleExist($book["title"])) {
+            $error["title"] = "A book with this title already exists";
+        } else {
+            $bookobj->title = $book["title"];
+            $bookobj->author = $book["author"];
+            $bookobj->genre = strtolower($book["genre"]);
+            $bookobj->publication_year = $book["publication_year"];
+            $bookobj->publisher = $book["publisher"];
+            $bookobj->copies = $book["copies"];
 
-        try {
-            if ($bookobj->addBook()) {
-                header("Location: viewbook.php");
-                exit();
-            } else {
-                echo "<p style='color:red;'>Error adding book.</p>";
+            try {
+                if ($bookobj->addBook()) {
+                    header("Location: viewbook.php");
+                    exit();
+                } else {
+                    echo "<p style='color:red;'>Error adding book.</p>";
+                }
+            } catch (PDOException $e) {
+                echo "<p style='color:red;'>Database error: " . htmlspecialchars($e->getMessage()) . "</p>";
             }
-        } catch (PDOException $e) {
-            echo "<p style='color:red;'>Database error: " . htmlspecialchars($e->getMessage()) . "</p>";
         }
     }
 }
@@ -110,42 +114,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $isValid) {
 <body>
         <h2>ADD BOOK</h2>
         <form action="" method="post">
-        <div class="field">
-            <label for="title">Title:<span>*</span></label>
-            <input type="text" id="title" name="title" value="<?= $book['title'] ?? '' ?>">
-            <span class="error-message"><?= $error['title'] ?? '' ?></span>
+        <div class="row">
+            <div class="field">
+                <label for="title">Title:<span>*</span></label>
+                <input type="text" id="title" name="title" value="<?= $book['title'] ?? '' ?>">
+                <span class="error-message"><?= $error['title'] ?? '' ?></span>
+            </div>
+            <div class="field">
+                <label for="author">Author:<span>*</span></label>
+                <input type="text" id="author" name="author" value="<?= $book['author'] ?? '' ?>">
+                <span class="error-message"><?= $error['author'] ?? '' ?></span>
+            </div>
         </div>
-        <div class="field">
-            <label for="author">Author:<span>*</span></label>
-            <input type="text" id="author" name="author" value="<?= $book['author'] ?? '' ?>">
-            <span class="error-message"><?= $error['author'] ?? '' ?></span>
+        <div class="row">
+            <div class="field">
+                <label for="genre">Genre:<span>*</span></label>
+                <select id="genre" name="genre">
+                    <option value="">--Select Genre--</option>
+                    <option value="history" <?= (isset($book['genre']) && $book['genre'] === 'history') ? 'selected' : '' ?>>History</option>
+                    <option value="science" <?= (isset($book['genre']) && $book['genre'] === 'science') ? 'selected' : '' ?>>Science</option>
+                    <option value="fiction" <?= (isset($book['genre']) && $book['genre'] === 'fiction') ? 'selected' : '' ?>>Fiction</option>
+                </select>
+                <span class="error-message"><?= $error['genre'] ?? '' ?></span>
+            </div>
+            <div class="field">
+                <label for="publication_year">Publication Year:<span>*</span></label>
+                <input type="number" id="publication_year" name="publication_year" value="<?= $book['publication_year'] ?? '' ?>">
+                <span class="error-message"><?= $error['publication_year'] ?? '' ?></span>
+            </div>
         </div>
-        <div class="field">
-            <label for="genre">Genre:<span>*</span></label>
-            <select id="genre" name="genre">
-                <option value="">--Select Genre--</option>
-                <option value="history" <?= (isset($book['genre']) && $book['genre'] === 'history') ? 'selected' : '' ?>>History</option>
-                <option value="science" <?= (isset($book['genre']) && $book['genre'] === 'science') ? 'selected' : '' ?>>Science</option>
-                <option value="fiction" <?= (isset($book['genre']) && $book['genre'] === 'fiction') ? 'selected' : '' ?>>Fiction</option>
-            </select>
-            <span class="error-message"><?= $error['genre'] ?? '' ?></span>
+        <div class="row">
+            <div class="field">
+                <label for="publisher">Publisher:<span>*</span></label>
+                <input type="text" id="publisher" name="publisher" value="<?= $book['publisher'] ?? '' ?>">
+                <span class="error-message"><?= $error['publisher'] ?? '' ?></span>
+            </div>
+            <div class="field">
+                <label for="copies">Copies:<span>*</span></label>
+                <input type="number" id="copies" name="copies" value="<?= $book['copies'] ?? '' ?>">
+                <span class="error-message"><?= $error['copies'] ?? '' ?></span>
+            </div>
         </div>
-        <div class="field">
-            <label for="publication_year">Publication Year:<span>*</span></label>
-            <input type="number" id="publication_year" name="publication_year" value="<?= $book['publication_year'] ?? '' ?>">
+        <div class="button-row">
+            <button type="submit">Add Book</button>
+            <button><a href="viewbook.php" class="view-books-btn">View Books</a></button>
         </div>
-        <p class="error-message"><?= $error['publication_year'] ?? '' ?></p>
-        <div class="field">
-            <label for="publisher">Publisher:<span>*</span></label>
-            <input type="text" id="publisher" name="publisher" value="<?= $book['publisher'] ?? '' ?>">
-            <span class="error-message"><?= $error['publisher'] ?? '' ?></span>
-        </div>
-        <div class="field">
-            <label for="copies">Copies:<span>*</span></label>
-            <input type="number" id="copies" name="copies" value="<?= $book['copies'] ?? '' ?>">
-            <span class="error-message"><?= $error['copies'] ?? '' ?></span>
-        </div>
-        <button type="submit">Add Book</button>
          </form>
 </body>
 </html>
