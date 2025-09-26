@@ -5,6 +5,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 20px;
+    font-size: 18px;
 }
 
 .container {
@@ -13,24 +14,32 @@ body {
     padding: 20px;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
     text-align: center;
     color: #4a4a4a;
     margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 .field {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    flex: 1;
 }
 
 .field label {
-    min-width: 120px;
+    font-weight: bold;
 }
 
 input[type="text"],
@@ -39,14 +48,21 @@ select {
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    flex: 1;
     box-sizing: border-box;
-    font-size: 16px;
+    font-size: 18px;
+    width: 100%;
 }
 
 span.error-message {
     color: red;
-    font-size: 14px;
+    font-size: 16px;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 button {
@@ -56,14 +72,17 @@ button {
     cursor: pointer;
     background-color: #5cb85c;
     color: #fff;
-    font-size: 16px;
+    font-size: 18px;
     transition: background-color 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
     background-color: #4cae4c;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.view-books-btn {
+    text-decoration: none;
+    color: #fff;
 }
 
 .error-msg {
@@ -73,4 +92,22 @@ button:hover {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid red;
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 95%;
+        padding: 15px;
+    }
+    .row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    button {
+        font-size: 16px;
+        padding: 10px 16px;
+    }
 }
