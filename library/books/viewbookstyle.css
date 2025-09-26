@@ -4,6 +4,7 @@ body {
     color: #222;
     margin: 0;
     padding: 16px;
+    font-size: 18px;
 }
 
 .container {
@@ -12,13 +13,13 @@ body {
     padding: 16px;
     background: #fff;
     border-radius: 6px;
-    box-shadow: 0 2px 8px #eee;
 }
 
 h2 {
     text-align: center;
     color: #333;
     margin-bottom: 16px;
+    font-size: 24px;
 }
 
 button {
@@ -27,7 +28,7 @@ button {
     border-radius: 4px;
     background: #5cb85c;
     color: #fff;
-    font-size: 15px;
+    font-size: 18px;
     cursor: pointer;
 }
 
@@ -39,11 +40,12 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 16px;
+    font-size: 16px;
 }
 
 th, td {
     border: 1px solid #eee;
-    padding: 10px;
+    padding: 12px;
     text-align: left;
 }
 
@@ -63,4 +65,22 @@ a.delete-btn {
 
 a.delete-btn:hover {
     color: #c9302c;
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 95%;
+        padding: 12px;
+        overflow-x: auto;
+    }
+    table {
+        min-width: 600px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    button {
+        font-size: 16px;
+        padding: 6px 12px;
+    }
 }
